@@ -1,38 +1,450 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* Base reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Body base styles */
+body {
+  margin: 0;
+  padding: 0;
+
+  font-family: "Open Sans", "Oswald" !important;
+
+  font-size: 16px;
+  line-height: 1.5;
+
+  color: #222;
+  background-color: #fff;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+p {
+  font-size: 1.1rem !important;
 }
+h5 {
+  font-size: 1.3rem !important;
+  font-weight: 600 !important;
+  font-family: "Oswald";
+}
+::placeholder {
+  color: #fff !important;
+}
+.organ_bg {
+  background-image: url("./Assets/organ.png");
+  background-size: contain;
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+section {
+  margin: 4rem 0;
+}
+.banner-logo {
+  width: 4.5rem;
+  margin: 1rem 0 0 2rem;
+}
+.brand-logo {
+  width: 4.5rem;
+}
+.otp-logo {
+  width: 4.5rem;
+}
+.input-field {
+  background-color: transparent !important;
+  color: #fff !important;
+  width: 100% !important;
+}
+.registration-input {
+  width: 50%;
+}
+/* MAIN WRAPPER */
+.banner-sec {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
 }
 
-.App-link {
-  color: #61dafb;
+/* LEFT PANEL */
+.left-sec {
+  flex: 0 0 60%;
+  background: url("./Assets/leftBanner.png") no-repeat center;
+  background-size: contain;
+  position: relative;
+  color: #fff;
+  padding: 4.5rem 4rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* CONTENT */
+.banner-content {
+  max-width: 680px;
+}
+
+/* PILL */
+.banner-pill {
+  display: inline-block;
+  border: 1px solid #fff;
+  border-radius: 30px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.15);
+  margin-bottom: 1.5rem;
+}
+
+/* TITLE */
+.banner-title {
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+/* DIVIDER */
+.divider {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 1.5rem 0;
+}
+
+/* HIGHLIGHT */
+.highlight {
+  color: #f9c313;
+  font-family: Oswald, sans-serif;
+}
+
+/* FORM */
+
+.email-input {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 10px;
+  width: 260px;
+}
+
+.email-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.register-btn {
+  background: #bdeeff;
+  border: none;
+  padding: 0.375rem 0.75rem;
+  font-weight: 600;
+  border-radius: 6px;
+}
+.dropdown-menu[data-bs-popper] {
+  left: -15px !important;
+}
+.navbar-nav .dropdown-menu {
+  position: absolute !important;
+  left: -6rem !important;
+}
+/* RIGHT PANEL */
+.right-sec {
+  flex: 0 0 40%;
+  background: url("./Assets/rightBanner.png") no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+/* DEADLINE CARD */
+.deadline-card {
+  position: absolute;
+  bottom: 0;
+  left: 50px;
+  padding: 1.5rem 2rem;
+  border-radius: 10px;
+  font-family: Oswald;
+}
+
+.deadline-card h5 {
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  font-family: "Oswald";
+}
+.lh-base,
+.lh-lg {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.deadline-card p {
+  font-weight: 300;
+  font-size: 1.5rem !important;
+}
+
+img.makers-logo {
+  width: 14rem;
+}
+
+/* lll */
+
+.sec-btn {
+  background-color: #2d318f !important;
+  color: #fff !important;
+  height: 2.5rem;
+}
+.guidelines-cont {
+  box-shadow: 0px 0px 25px 2px #0000001f;
+}
+.panel-body {
+  top: 2rem;
+  left: 0;
+  right: 0;
+}
+.heading {
+  font-size: 1.6rem;
+  font-weight: 600;
+  font-family: "Oswald";
+}
+img.prize {
+  width: 7rem;
+}
+img.prize1 {
+  width: 4rem;
+}
+.winner-stage {
+  font-family: "Oswald";
+  font-size: 1.1rem;
+}
+.winner-graph {
+  min-height: 16rem;
+  min-width: 8rem;
+}
+.winner-amount {
+  font-size: 1.2rem !important;
+  font-family: "Oswald";
+}
+.prize-amount {
+  font-size: 1.9rem !important;
+}
+img.social-icon {
+  width: 3rem;
+}
+.registration-panel {
+  background-color: #2d318f;
+}
+.about_text {
+  font-size: 1.3rem !important;
+}
+.profileImg {
+  width: 6rem;
+}
+.societies-sec {
+  background-color: #f3f3f3;
+}
+/* footer */
+
+.blueBg {
+  background: linear-gradient(183.71deg, #c8e9f9 3.3%, #2d318f 472.55%);
+}
+.footer-logo {
+  width: 10rem;
+}
+
+/* otp card */
+
+.otp-card {
+  width: 36%;
+  border: 1px solid #949494;
+  border-radius: 1rem;
+}
+.registration-cont {
+  width: 60%;
+}
+.registration-card {
+  border: 1px solid #949494;
+  border-radius: 1rem;
+}
+.otp-form {
+  font-family: "Oswald";
+  font-weight: 700;
+}
+.checkbox-label {
+  font-weight: 500;
+}
+.form-control {
+  border-color: #949494 !important;
+}
+.otp-input {
+  width: 2.8rem !important;
+  height: 2.8rem !important;
+  border-radius: 0.8rem !important;
+  text-align: center;
+  font-size: 1.3rem !important;
+}
+.form-check-input {
+  width: 1.5em !important;
+  height: 1.5em !important;
+  margin-right: 0.3rem;
+}
+.form-check-input:checked {
+  background-color: #34f664 !important;
+  border-color: #34f664 !important;
+}
+
+/* upload-sec */
+.upload-form-cont {
+  width: 48%;
+}
+.upload-sec {
+  border: 1px dashed gray;
+}
+.note-text {
+  font-size: 1rem !important;
+  font-family: Oswald;
+}
+.makers-section {
+  margin-top: 6rem;
+}
+/* assosciation-card */
+.assosciation-card {
+  background-color: #e3f5ff !important;
+}
+.card-title {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+}
+.card-subtitle {
+  font-size: 0.8rem !important;
+  font-weight: 400 !important;
+  color: #000 !important;
+}
+.prize-title {
+  font-size: 1.6rem;
+  font-family: "Oswald";
+}
+.profileImg {
+  max-width: 100%;
+}
+.winner-name {
+  font-size: 1rem;
+  white-space: nowrap;
+}
+img.flag {
+  max-width: 100%;
+}
+img.avatar {
+  width: 2rem;
+}
+.brand-link {
+  color: #a7a7a7;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+.brand-link:hover {
+  color: #2d318f;
+}
+.hetero-brand-logo {
+  width: 10rem;
+}
+.brand-page {
+  font-size: 1.2rem !important;
+  color: #2d318f !important;
+  border-bottom: 2px solid #2d318f !important;
+}
+img.productImg {
+  width: 86%;
+}
+@media (max-width: 768px) {
+  .registration-input {
+    width: 100%;
   }
-  to {
-    transform: rotate(360deg);
+  .makers-section {
+    margin-top: 4rem;
+  }
+  .otp-card {
+    width: 100%;
+  }
+  .otp-input {
+    width: 2.4rem !important;
+    height: 2.4rem !important;
+  }
+  .registration-cont {
+    width: 90%;
+  }
+  .banner-logo {
+    margin-bottom: 1rem;
+  }
+}
+@media (max-width: 768px) {
+  img.makers-logo {
+    margin: 1rem 0;
+  }
+  /* STACK SECTIONS */
+  .banner-sec {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  /* LEFT SECTION */
+  .left-sec {
+    flex: 1;
+    padding: 3rem 1.5rem;
+    border-radius: 0;
+    background-size: cover;
+  }
+
+  /* LOGO */
+  .brand-logo {
+    position: static;
+    margin-bottom: 1.5rem;
+    width: 60px;
+  }
+  .winner-graph {
+    min-height: auto !important;
+    min-width: 10rem !important;
+    margin: 1rem 0;
+  }
+
+  /* CONTENT */
+  .banner-content {
+    max-width: 100%;
+  }
+
+  /* TITLE */
+  .banner-title {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* PILL */
+  .banner-pill {
+    font-size: 0.9rem;
+    padding: 5px 16px;
+  }
+
+  /* FORM STACK */
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .email-input {
+    width: 100%;
+  }
+
+  .register-btn {
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* RIGHT SECTION */
+  .right-sec {
+    flex: 1;
+    min-height: 76vh;
+    background-position: top;
+  }
+  .input-field {
+    width: 100% !important;
   }
 }
