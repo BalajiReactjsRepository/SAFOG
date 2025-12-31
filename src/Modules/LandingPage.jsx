@@ -15,11 +15,16 @@ import {
 import Cookies from "js-cookie";
 import brandLogo from "../Assets/Brand.png";
 import MakersLogo from "../Utils/MakersLogo";
+import rightRings from "../Assets/right-rings.png";
+import leftRings from "../Assets/left-rings.png";
+import email from "../Assets/email.png";
 
 const LandingPage = () => {
   const [userMail, setUserMail] = useState("");
   const [error, setError] = useState("");
   const [socities, setSocities] = useState([]);
+  const [winnersList, setWinnersList] = useState([]);
+  const [validMail, setValidMail] = useState(false);
   const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const navigate = useNavigate();
@@ -27,11 +32,16 @@ const LandingPage = () => {
   const token = process.env.REACT_APP_TOKEN;
   const tokenKey = Cookies.get(token);
 
-  // useEffect(() => {
-  //   if (tokenKey) {
-  //     navigate("/registration");
-  //   }
-  // }, [tokenKey, navigate]);
+  useEffect(() => {
+    const winnersRes = async () => {
+      try {
+        const winnersRes = await axios.get(`${baseUrl}/winners`);
+        const res = winnersRes?.data?.data;
+        setWinnersList(res);
+      } catch (error) {}
+    };
+    winnersRes();
+  }, [baseUrl, token]);
 
   useEffect(() => {
     if (tokenKey) navigate("/registration");
@@ -59,6 +69,19 @@ const LandingPage = () => {
     setError("");
   };
 
+  const handleBlur = () => {
+    if (!userMail) return;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(userMail)) {
+      setValidMail(false);
+      setError("Enter a valid email address");
+    } else {
+      setError("");
+      setValidMail(true);
+    }
+  };
+
   const onSubmitSuccess = () => {
     navigate("/otp-verification", { state: { userMail } });
   };
@@ -70,6 +93,7 @@ const LandingPage = () => {
         setError("Enter the Email");
         return;
       }
+      if (!validMail) return;
       onLoading();
       const response = await axios.post(`${baseUrl}/auth/send-otp`, {
         email: userMail,
@@ -80,7 +104,6 @@ const LandingPage = () => {
         onSubmitSuccess();
       }
     } catch (error) {
-      console.log(error);
       onLoadingClose();
       onError(error);
     }
@@ -113,14 +136,36 @@ const LandingPage = () => {
                 registration.
               </p>
 
-              <form className='d-flex flex-column flex-md-row gap-3'>
-                <input
-                  type='email'
+              {/* <div className='d-flex flex-column align-items-start registration-input position-relative'>
+                <Form.Control
                   placeholder='Enter your mail id'
-                  className='email-input rounded-2'
+                  className='input-field '
                   maxLength={100}
                   value={userMail}
                   onChange={handleInput}
+                />
+                <img
+                  src={email}
+                  alt='email'
+                  className='email position-absolute'
+                />
+                {error && <small>{error}</small>}
+              </div> */}
+
+              <form className='d-flex flex-column position-relative flex-md-row gap-3'>
+                <Form.Control
+                  type='email'
+                  placeholder='Enter your mail id'
+                  className='input-field registration-input-field'
+                  maxLength={100}
+                  value={userMail}
+                  onChange={handleInput}
+                  onBlur={handleBlur}
+                />
+                <img
+                  src={email}
+                  alt='email'
+                  className='email position-absolute'
                 />
                 <button className='register-btn' onClick={handleRegisterEmail}>
                   Continue To Register
@@ -166,31 +211,30 @@ const LandingPage = () => {
             </div>
             <div className='col-sm-12 col-md-6'>
               <div className='organ_bg'>
-                <div className='row gap-2'>
-                  <div className='col-md-3 border border-1 rounded p-2'>
+                <div className='d-flex flex-wrap gap-3'>
+                  <div className='essay-topic1 rounded-4'>
                     <h5>Topic</h5>
                     <p>
                       <strong>Polycystic Ovarian disease</strong> in the South
                       Asia Region
                     </p>
                   </div>
-                  <div className='col-md-8 border border-1 rounded p-2'>
+                  <div className='essay-topic2 rounded-4'>
                     <h5>Eligibility</h5>
                     <p>
-                      Open to all members of OGSB,
-                      FOGSI,NESOG,SOGP,SLCOG,AFSOG,SOGM below the age of
-                      <strong> 45 years</strong>
-                      as on 1st January 2025
+                      Open to all members of FOGSI, OGSB, NESOG, SOGP, SLCOG,
+                      AFSOG, SOGM below the age of <strong>45 years</strong> as
+                      on 1st January 2025
                     </p>
                   </div>
-                  <div className='col-md-7 border border-1 rounded p-2'>
+                  <div className='essay-topic3 rounded-4'>
                     <h5>Topics to Be Covered</h5>
                     <p>
                       Covering incidence, clinical features, diagnosis,
                       treatment, and long-term outcomes.
                     </p>
                   </div>
-                  <div className='col-md-4 border border-1 rounded p-2'>
+                  <div className='essay-topic4 rounded-4'>
                     <h5>Word Limit</h5>
                     <p>
                       The essay should be around
@@ -239,8 +283,12 @@ const LandingPage = () => {
         <div className='d-flex flex-column flex-md-row align-items-center justify-content-center gap-5 py-3'>
           <div className='registration-panel d-flex flex-column align-items-center rounded-3 p-3'>
             <img src={first} alt='first-prize' className='prize' />
-            <h6 className='prize-title text-light fw-bold mt-2'>Winner</h6>
-            <h5 className='prize-amount text-light'>&#8377; 40,000</h5>
+            <h6 className='prize-title text-light fw-bold mt-2'>
+              {winnersList[0]?.position}
+            </h6>
+            <h5 className='prize-amount text-light'>
+              &#8377; {winnersList[0]?.prize_amount}
+            </h5>
             <span className='d-block text-light mb-2'>
               Essay will be Published in the SAFOG
             </span>
@@ -251,9 +299,11 @@ const LandingPage = () => {
           <div className='registration-panel d-flex flex-column align-items-center rounded-3 p-3'>
             <img src={winner} alt='first-prize' className='prize' />
             <h6 className='prize-title text-light fw-bold mt-2'>
-              1st Runner Up
+              {winnersList[1]?.position}
             </h6>
-            <h5 className='prize-amount text-light'>&#8377; 30,000</h5>
+            <h5 className='prize-amount text-light'>
+              &#8377; {winnersList[1]?.prize_amount}
+            </h5>
             <span className='d-block text-light mb-2'>
               Essay will be Published in the SAFOG
             </span>
@@ -264,9 +314,11 @@ const LandingPage = () => {
           <div className='registration-panel d-flex flex-column align-items-center rounded-3 p-3'>
             <img src={second} alt='first-prize' className='prize' />
             <h6 className='prize-title text-light fw-bold mt-2'>
-              2nd Runner Up
+              {winnersList[2]?.position}
             </h6>
-            <h5 className='prize-amount text-light'>&#8377; 20,000</h5>
+            <h5 className='prize-amount text-light'>
+              &#8377; {winnersList[2]?.prize_amount}
+            </h5>
             <span className='d-block text-light mb-2'>
               Essay will be Published in the SAFOG
             </span>
@@ -344,7 +396,11 @@ const LandingPage = () => {
       {/* registration panel */}
 
       <section className='container'>
-        <div className=' registration-panel rounded-4 p-4'>
+        <div className=' registration-panel rounded-4 p-5 position-relative'>
+          <div className='bg-images'>
+            <img src={leftRings} alt='leftrings' className='leftRings' />
+            <img src={rightRings} alt='rightRings' className='rightRings' />
+          </div>
           <div className='panel-body text-center'>
             <h4 className='heading text-light mb-3'>
               Registration & Submission Link
@@ -358,13 +414,20 @@ const LandingPage = () => {
                 onSubmit={handleRegisterEmail}
                 className='d-flex flex-column align-items-start justify-content-md-center flex-md-row gap-2 mt-3'
               >
-                <div className='d-flex flex-column align-items-start registration-input'>
+                <div className='d-flex flex-column align-items-start registration-input position-relative'>
                   <Form.Control
+                    type='email'
                     placeholder='Enter your mail id'
-                    className='input-field'
+                    className='input-field '
                     maxLength={100}
                     value={userMail}
                     onChange={handleInput}
+                    onBlur={handleBlur}
+                  />
+                  <img
+                    src={email}
+                    alt='email'
+                    className='email position-absolute'
                   />
                   {error && (
                     <small className='text-end text-light'>{error}</small>

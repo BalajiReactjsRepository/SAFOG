@@ -65,13 +65,11 @@ const Registration = () => {
 
       const formdata = new FormData();
       formdata.append("file", file);
-      console.log("balaji");
       const res = await axios.post(`${baseUrl}/essay/submit`, formdata, {
         headers,
       });
 
       onLoadingClose();
-      console.log(res);
       if (res.status === 201) {
         onSuccess({ message: "Essay Submitted Successfully." });
         setTimeout(() => {
@@ -80,12 +78,9 @@ const Registration = () => {
       }
     } catch (err) {
       onLoadingClose();
-      console.log(err);
       onError(err);
     }
   };
-
-  console.log(file);
 
   return (
     <div className='container'>

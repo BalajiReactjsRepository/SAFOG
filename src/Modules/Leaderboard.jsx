@@ -34,18 +34,13 @@ const Leaderboard = () => {
   useEffect(() => {
     const winnersRes = async () => {
       try {
-        const headers = {
-          Authorization: `Bearer ${token}`,
-        };
-        const winnersRes = await axios.get(`${baseUrl}/winners`, { headers });
+        const winnersRes = await axios.get(`${baseUrl}/winners`);
         const res = winnersRes?.data?.data;
         setWinnersList(res);
       } catch (error) {}
     };
     winnersRes();
   }, [baseUrl, token]);
-
-  console.log(socitiesList);
 
   return (
     <section className='leaderboard-sec'>

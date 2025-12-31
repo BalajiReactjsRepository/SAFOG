@@ -21,7 +21,7 @@ const OtpVerificationPage = () => {
 
   const location = useLocation();
   const { userMail } = location.state || {};
-  const { setAuthToken } = useContext(AuthContext);
+  const { setAuthToken, setSubmitStatus } = useContext(AuthContext);
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const tokenKey = process.env.REACT_APP_TOKEN;
   const token = Cookies.get(tokenKey);
@@ -29,9 +29,17 @@ const OtpVerificationPage = () => {
   const inputsRef = useRef([]);
 
   const navigate = useNavigate();
+  const verifiedRef = useRef(false);
+
+  // useEffect(() => {
+  //   if (token) navigate("/registration");
+  // }, [token, navigate]);
 
   useEffect(() => {
-    if (token) navigate("/registration");
+    // If user already logged in AND not coming from OTP verification
+    if (token && !verifiedRef.current) {
+      navigate("/registration");
+    }
   }, [token, navigate]);
 
   const handleOtp = (value, index) => {
@@ -66,7 +74,6 @@ const OtpVerificationPage = () => {
         onSuccess({ message: "OTP Sent" });
       }
     } catch (error) {
-      console.log(error);
       onLoadingClose();
       onError();
     }
@@ -91,27 +98,37 @@ const OtpVerificationPage = () => {
       if (res?.data?.status === "success") {
         onLoadingClose();
         const { token, essay_submitted } = res.data.data;
-
+        onSuccess({ message: "OTP verified successfully" });
+        // Cookies.set(tokenKey, token);
+        // setAuthToken(token);
+        // console.log(essay_submitted, "test");
+        // if (essay_submitted) {
+        //   navigate("/submitted", {
+        //     state: {
+        //       message:
+        //         "Your essay has already been submitted. Winners will be announced soon.",
+        //     },
+        //   });
+        // } else {
+        //   navigate("/registration");
+        // }
+        verifiedRef.current = true; // 🔥 important
         Cookies.set(tokenKey, token);
         setAuthToken(token);
-        onSuccess({ message: "OTP verified successfully" });
 
-        setTimeout(() => {
-          if (essay_submitted) {
-            navigate("/submitted", {
-              state: {
-                message:
-                  "Your essay has already been submitted. Winners will be announced soon.",
-              },
-            });
-          } else {
-            navigate("/registration");
-          }
-        }, 2500);
+        if (essay_submitted) {
+          navigate("/submitted", {
+            state: {
+              message:
+                "Your essay has already been submitted. Winners will be announced soon.",
+            },
+          });
+        } else {
+          navigate("/registration");
+        }
       }
     } catch (error) {
       onLoadingClose();
-      console.error(error);
       onError({ message: "Invalid or expired OTP" });
     }
   };
@@ -132,7 +149,12 @@ const OtpVerificationPage = () => {
               <Form.Label className='fw-bold otp-form'>
                 Email Address
               </Form.Label>
-              <Form.Control type='text' value={userMail} readOnly />
+              <Form.Control
+                className='readOnlyInput'
+                type='text'
+                value={userMail}
+                readOnly
+              />
             </Form.Group>
           </Col>
           <Col sm={12} md={4}>

@@ -16,6 +16,10 @@ export const AuthProvider = ({ children }) => {
     localStorage.getItem("gender-value") || "male"
   );
 
+  const [submitStatus, setSubmitStatus] = useState(
+    localStorage.getItem("submit-status")
+  );
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -44,7 +48,10 @@ export const AuthProvider = ({ children }) => {
     if (genderVal) {
       localStorage.setItem("gender-value", genderVal);
     }
-  }, [doctorName, genderVal]);
+    if (submitStatus) {
+      localStorage.setItem("submit-status", submitStatus);
+    }
+  }, [doctorName, genderVal, submitStatus]);
 
   const logout = () => {
     localStorage.removeItem("doctor-name");
@@ -63,6 +70,8 @@ export const AuthProvider = ({ children }) => {
         setGenderValue,
         logout,
         setAuthToken,
+        submitStatus,
+        setSubmitStatus,
       }}
     >
       {children}

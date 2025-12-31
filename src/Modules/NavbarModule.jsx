@@ -23,7 +23,7 @@ function NavbarModule() {
     logout();
     navigate("/");
   };
-  console.log(genderVal, doctorName, "ll");
+
   return (
     <Navbar expand='lg'>
       <Container>

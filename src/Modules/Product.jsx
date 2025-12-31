@@ -179,6 +179,17 @@ const Product = () => {
       if (res?.data?.status === "success") {
         onLoadingClose();
         onSuccess({ message: res.data.message });
+        setValues({
+          first_name: "",
+          middle_name: "",
+          last_name: "",
+          country: "",
+          phone_number: "",
+          email: "",
+          speciality: [],
+          preferred_contact: [],
+          message: "",
+        });
       }
     } catch (err) {
       onLoadingClose();

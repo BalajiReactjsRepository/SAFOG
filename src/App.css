@@ -39,10 +39,21 @@ h5 {
 }
 .organ_bg {
   background-image: url("./Assets/organ.png");
-  background-size: contain;
-
+  background-size: 60% auto;
   background-position: center;
   background-repeat: no-repeat;
+}
+.essay-topic1,
+.essay-topic4 {
+  width: 28%;
+  border: 1px solid #3636364d !important;
+  padding: 0.9rem;
+}
+.essay-topic2,
+.essay-topic3 {
+  width: 68%;
+  border: 1px solid #3636364d !important;
+  padding: 0.9rem;
 }
 section {
   margin: 4rem 0;
@@ -61,9 +72,15 @@ section {
   background-color: transparent !important;
   color: #fff !important;
   width: 100% !important;
+  padding: 0.375rem 2.8rem !important;
 }
-.registration-input {
-  width: 50%;
+.registration-input-field {
+  width: 50% !important;
+}
+.email {
+  width: 1.8rem;
+  top: 5px;
+  left: 6px;
 }
 /* MAIN WRAPPER */
 .banner-sec {
@@ -74,19 +91,34 @@ section {
   overflow: hidden;
 }
 
-/* LEFT PANEL */
 .left-sec {
-  flex: 0 0 60%;
-  background: url("./Assets/leftBanner.png") no-repeat center;
-  background-size: contain;
+  flex: 0 0 100%;
+  margin-top: 1rem;
   position: relative;
+  overflow: visible;
+  padding: 3.9rem;
   color: #fff;
-  padding: 4.5rem 4rem;
 }
 
+.left-sec::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("./Assets/leftBanner.png") no-repeat left center;
+
+  background-size: 98% 100%;
+
+  z-index: 0;
+}
+.readOnlyInput {
+  color: #7f7f7f !important;
+}
 /* CONTENT */
 .banner-content {
-  max-width: 680px;
+  max-width: 1000px;
+  padding: 0.1rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* PILL */
@@ -149,19 +181,27 @@ section {
   left: -6rem !important;
 }
 /* RIGHT PANEL */
+
 .right-sec {
   flex: 0 0 40%;
-  background: url("./Assets/rightBanner.png") no-repeat;
-  background-size: cover;
-  position: relative;
+  /* position: relative; */
+  overflow: visible;
+}
+
+.right-sec::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("./Assets/rightBanner.png") no-repeat right center;
+
+  background-size: 45% 100%;
 }
 
 /* DEADLINE CARD */
 .deadline-card {
   position: absolute;
   bottom: 0;
-  left: 50px;
-  padding: 1.5rem 2rem;
+  padding: 1rem;
   border-radius: 10px;
   font-family: Oswald;
 }
@@ -229,8 +269,22 @@ img.prize1 {
 img.social-icon {
   width: 3rem;
 }
+
 .registration-panel {
   background-color: #2d318f;
+  padding: 2rem 8rem;
+}
+img.rightRings {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8rem;
+}
+img.leftRings {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 8rem;
 }
 .about_text {
   font-size: 1.3rem !important;
@@ -247,15 +301,16 @@ img.social-icon {
   background: linear-gradient(183.71deg, #c8e9f9 3.3%, #2d318f 472.55%);
 }
 .footer-logo {
-  width: 10rem;
+  width: 12rem;
 }
 
 /* otp card */
 
 .otp-card {
-  width: 36%;
+  width: 37%;
   border: 1px solid #949494;
   border-radius: 1rem;
+  background-color: #f9f9f9;
 }
 .registration-cont {
   width: 60%;
@@ -299,11 +354,10 @@ img.social-icon {
   border: 1px dashed gray;
 }
 .note-text {
-  font-size: 1rem !important;
-  font-family: Oswald;
+  font-size: 0.9rem !important;
 }
 .makers-section {
-  margin-top: 6rem;
+  margin-top: 2rem;
 }
 /* assosciation-card */
 .assosciation-card {
@@ -356,8 +410,15 @@ img.productImg {
   width: 86%;
 }
 @media (max-width: 768px) {
+  .registration-input-field {
+    width: 100% !important;
+  }
   .registration-input {
     width: 100%;
+  }
+  .registration-panel {
+    background-color: #2d318f;
+    padding: 8rem 3rem;
   }
   .makers-section {
     margin-top: 4rem;
@@ -377,27 +438,22 @@ img.productImg {
   }
 }
 @media (max-width: 768px) {
+  .essay-topic1,
+  .essay-topic4 {
+    width: 100% !important;
+  }
+  .essay-topic2,
+  .essay-topic3 {
+    width: 100% !important;
+  }
   img.makers-logo {
     margin: 1rem 0;
   }
   /* STACK SECTIONS */
-  .banner-sec {
-    flex-direction: column;
-    min-height: auto;
-  }
-
-  /* LEFT SECTION */
-  .left-sec {
-    flex: 1;
-    padding: 3rem 1.5rem;
-    border-radius: 0;
-    background-size: cover;
-  }
 
   /* LOGO */
   .brand-logo {
     position: static;
-    margin-bottom: 1.5rem;
     width: 60px;
   }
   .winner-graph {
@@ -438,13 +494,51 @@ img.productImg {
     padding: 12px;
   }
 
-  /* RIGHT SECTION */
-  .right-sec {
-    flex: 1;
-    min-height: 76vh;
-    background-position: top;
-  }
   .input-field {
     width: 100% !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-sec {
+    display: flex;
+    flex-direction: column !important;
+  }
+  /* parent wrapper */
+  .banner-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* LEFT SECTION (TOP) */
+  .left-sec {
+    flex: 0 0 100%;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    margin-top: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .left-sec::before {
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* RIGHT SECTION (BOTTOM) */
+  .right-sec {
+    flex: 0 0 100%;
+    width: 100%;
+    min-height: 90vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .right-sec::before {
+    background-size: cover;
+  }
+  .deadline-card {
+    bottom: 14px !important;
+    left: 30px !important;
   }
 }
